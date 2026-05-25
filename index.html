@@ -836,21 +836,158 @@
   }
 
   /* ══════════════════════════════
+     HAMBURGER MENU
+  ══════════════════════════════ */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+    z-index: 200;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--white);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile nav drawer */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100vh;
+    background: rgba(8,8,8,0.98);
+    z-index: 150;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .mobile-nav.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .mobile-nav a {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    letter-spacing: 4px;
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .mobile-nav a:hover, .mobile-nav a.nav-cta { color: var(--red); }
+
+  /* ══════════════════════════════
      RESPONSIVE
   ══════════════════════════════ */
   @media (max-width: 900px) {
+    /* NAV */
     nav { padding: 18px 24px; }
     .nav-links { display: none; }
-    .hero-left { width: 100%; padding: 100px 30px 60px; }
-    .hero-right { width: 100%; opacity: 0.25; }
+    .hamburger { display: flex; }
+    .mobile-nav { display: flex; }
+
+    /* HERO — show image as a proper background */
+    #hero { flex-direction: column; height: auto; min-height: 100svh; }
+    .hero-right {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 1;
+    }
+    .hero-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    /* Dark overlay so text stays readable */
+    .hero-right::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(8,8,8,0.75) 0%,
+        rgba(8,8,8,0.55) 50%,
+        rgba(8,8,8,0.85) 100%);
+      z-index: 3;
+    }
+    .hero-left {
+      position: relative;
+      width: 100%;
+      padding: 120px 28px 80px;
+      z-index: 5;
+      background: transparent;
+      justify-content: flex-end;
+    }
     .hero-left::after { display: none; }
+    .hero-name { font-size: clamp(3.2rem, 12vw, 5rem); }
+
+    /* ABOUT */
     #about { flex-direction: column; }
-    .about-img-wrap, .about-content { width: 100%; }
-    .about-content { padding: 60px 30px; }
-    .services-grid, .transform-grid { grid-template-columns: 1fr; }
+    .about-img-wrap {
+      width: 100%;
+      height: 320px;
+    }
+    .about-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .about-content { width: 100%; padding: 60px 28px; }
+    .exp-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .exp-num { font-size: 1.8rem; }
+
+    /* SERVICES */
+    .services-grid { grid-template-columns: 1fr; }
+    #services { padding: 80px 28px; }
+
+    /* TRANSFORMATIONS */
+    .transform-grid { grid-template-columns: 1fr; }
+    #transformations { padding: 80px 28px; }
+    .ba-wrap { height: auto; aspect-ratio: 16/10; }
+    .ba-half img { height: 100%; }
+
+    /* PROGRAMS */
     .programs-inner { grid-template-columns: 1fr; gap: 40px; }
-    #services, #transformations, #programs, #testimonials { padding: 80px 30px; }
-    footer { padding: 40px 30px; flex-direction: column; align-items: flex-start; }
+    #programs { padding: 80px 28px; }
+    .program-img img {
+      height: auto;
+      aspect-ratio: 4/3;
+      width: 100%;
+    }
+    .program-img::before { display: none; }
+
+    /* TESTIMONIALS */
+    #testimonials { padding: 80px 28px; }
+    .testi-card { width: 280px; min-width: 280px; }
+
+    /* FOOTER */
+    footer { padding: 40px 28px; flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-name { font-size: clamp(2.8rem, 14vw, 4rem); }
+    .hero-stats { gap: 20px; }
+    .stat-num { font-size: 2.2rem; }
+    .exp-grid { grid-template-columns: 1fr 1fr; }
+    .about-img-wrap { height: 260px; }
+    .ba-wrap { aspect-ratio: 4/3; }
+    .testi-card { width: 260px; min-width: 260px; padding: 28px 22px; }
+    .cta-inner { padding: 40px 20px; }
+    .cta-btns { flex-direction: column; align-items: center; }
   }
 </style>
 </head>
@@ -866,7 +1003,19 @@
     <li><a href="#programs">Programs</a></li>
     <li><a href="#cta" class="nav-cta">Get in Touch</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile nav drawer -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about" class="mob-link">About</a>
+  <a href="#services" class="mob-link">Services</a>
+  <a href="#transformations" class="mob-link">Results</a>
+  <a href="#programs" class="mob-link">Programs</a>
+  <a href="#cta" class="mob-link">Get in Touch</a>
+</div>
 
 <!-- ══════════════════════════════
      SECTION 1 — HERO
@@ -1370,6 +1519,23 @@
     nav.style.background = window.scrollY > 60
       ? 'rgba(10,10,10,0.97)'
       : 'linear-gradient(to bottom, rgba(10,10,10,0.95), transparent)';
+  });
+
+  // Hamburger menu toggle
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+    document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+  });
+  // Close mobile nav when any link is clicked
+  document.querySelectorAll('.mob-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+      document.body.style.overflow = '';
+    });
   });
 </script>
 </body>

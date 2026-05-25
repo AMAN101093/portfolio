@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ronit Rawat — Elite Gym Trainer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --red: #C9A84C;
+    --red-dark: #A07830;
+    --red-glow: rgba(201,168,76,0.35);
+    --black: #080808;
+    --black2: #0f0f0f;
+    --white: #f5f0e8;
+    --grey: #888;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-cond: 'Barlow Condensed', sans-serif;
+    --font-body: 'Barlow', sans-serif;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── CUSTOM SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--red); }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 60px;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    color: var(--white);
+  }
+  .nav-logo span { color: var(--red); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-cond);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--grey);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--red); }
+  .nav-cta {
+    background: var(--red);
+    color: var(--white) !important;
+    padding: 8px 22px !important;
+    border: 1px solid var(--red) !important;
+    transition: background 0.3s, color 0.3s !important;
+  }
+  .nav-cta:hover { background: transparent !important; color: var(--red) !important; }
+
+  /* ══════════════════════════════
+     SECTION 1 — HERO (45/55 split)
+  ══════════════════════════════ */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: flex;
+    overflow: hidden;
+  }
+
+  /* Left black panel — 45% */
+  .hero-left {
+    position: relative;
+    width: 45%;
+    background: var(--black);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 60px 80px 60px;
+    z-index: 2;
+  }
+
+  /* The dramatic gradient bleed from black into image */
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    right: -120px;
+    top: 0;
+    width: 180px;
+    height: 100%;
+    background: linear-gradient(to right, var(--black) 0%, transparent 100%);
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-cond);
+    font-size: 0.8rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+  }
+
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 6vw, 7rem);
+    line-height: 0.9;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s forwards;
+  }
+  .hero-name .red { color: var(--red); }
+
+  .hero-tagline {
+    font-family: var(--font-cond);
+    font-size: 1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-top: 18px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.7s forwards;
+  }
+
+  .hero-divider {
+    width: 50px;
+    height: 2px;
+    background: var(--red);
+    margin: 24px 0;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s forwards;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 36px;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.1s forwards;
+  }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 2.8rem;
+    color: var(--red);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: var(--font-cond);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-top: 4px;
+  }
+
+  .hero-btn {
+    margin-top: 32px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-cond);
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--red);
+    border: none;
+    padding: 14px 32px;
+    cursor: pointer;
+    text-decoration: none;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.3s forwards;
+    transition: background 0.3s, transform 0.2s;
+    width: fit-content;
+  }
+  .hero-btn:hover { background: var(--red-dark); transform: translateX(4px); }
+  .hero-btn svg { transition: transform 0.2s; }
+  .hero-btn:hover svg { transform: translateX(4px); }
+
+  /* Right image panel — 55% */
+  .hero-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 60%;
+    height: 100%;
+    z-index: 1;
+  }
+  .hero-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: brightness(0.85) contrast(1.1) saturate(0.9);
+  }
+  /* Overlay tint on image */
+  .hero-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 60%, rgba(10,10,10,0.6) 100%);
+    z-index: 2;
+  }
+
+  /* Vertical text on far right */
+  .hero-vertical-text {
+    position: absolute;
+    right: 24px;
+    bottom: 80px;
+    font-family: var(--font-cond);
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(245,240,235,0.4);
+    writing-mode: vertical-rl;
+    z-index: 10;
+    opacity: 0;
+    animation: fadeUp 1s 1.6s forwards;
+  }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    z-index: 10;
+    opacity: 0;
+    animation: fadeIn 1s 2s forwards;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--red), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+  .scroll-txt {
+    font-family: var(--font-cond);
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    color: var(--grey);
+  }
+
+  /* ══════════════════════════════
+     SECTION 2 — ABOUT / EXPERIENCE
+  ══════════════════════════════ */
+  #about {
+    display: flex;
+    min-height: 90vh;
+    overflow: hidden;
+  }
+
+  /* Left image side */
+  .about-img-wrap {
+    width: 45%;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(0.7) contrast(1.2) saturate(0.7);
+    transition: transform 0.6s ease;
+  }
+  .about-img-wrap:hover img { transform: scale(1.03); }
+  /* Red accent line on right edge */
+  .about-img-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 3px; height: 100%;
+    background: var(--red);
+  }
+
+  /* Right content side */
+  .about-content {
+    width: 55%;
+    background: var(--black2);
+    padding: 100px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  .about-content::before {
+    content: 'ABOUT';
+    position: absolute;
+    top: 60px; right: 60px;
+    font-family: var(--font-display);
+    font-size: 8rem;
+    color: rgba(255,255,255,0.03);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .section-label {
+    font-family: var(--font-cond);
+    font-size: 0.75rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 14px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+
+  .section-title span { color: var(--red); }
+
+  .about-text {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #aaa;
+    max-width: 480px;
+    margin-bottom: 40px;
+  }
+
+  .exp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .exp-card {
+    border-left: 3px solid var(--red);
+    padding-left: 16px;
+  }
+  .exp-num {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    color: var(--red);
+    line-height: 1;
+  }
+  .exp-desc {
+    font-family: var(--font-cond);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-top: 4px;
+  }
+
+  .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .skill-tag {
+    font-family: var(--font-cond);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border: 1px solid #333;
+    color: var(--grey);
+    transition: border-color 0.3s, color 0.3s;
+  }
+  .skill-tag:hover { border-color: var(--red); color: var(--red); }
+
+  /* ══════════════════════════════
+     SECTION 3 — SERVICES
+  ══════════════════════════════ */
+  #services {
+    padding: 120px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #services::before {
+    content: 'SERVICES';
+    position: absolute;
+    top: 50px; left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-display);
+    font-size: 12rem;
+    white-space: nowrap;
+    color: rgba(255,255,255,0.02);
+    pointer-events: none;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 70px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .service-card {
+    position: relative;
+    background: var(--black2);
+    padding: 50px 40px;
+    overflow: hidden;
+    cursor: default;
+    transition: background 0.4s;
+    border-top: 2px solid transparent;
+  }
+  .service-card:hover {
+    background: #161616;
+    border-top-color: var(--red);
+  }
+
+  .service-icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 28px;
+  }
+  .service-icon svg { width: 100%; height: 100%; }
+
+  .service-num {
+    position: absolute;
+    top: 24px; right: 28px;
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    color: rgba(201,168,76,0.08);
+    line-height: 1;
+    transition: color 0.4s;
+  }
+  .service-card:hover .service-num { color: rgba(201,168,76,0.18); }
+
+  .service-title {
+    font-family: var(--font-cond);
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .service-text {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #777;
+  }
+
+  .service-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    font-family: var(--font-cond);
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .service-card:hover .service-arrow { opacity: 1; }
+
+  /* ══════════════════════════════
+     SECTION 4 — BEFORE / AFTER
+  ══════════════════════════════ */
+  #transformations {
+    padding: 120px 60px;
+    background: var(--black2);
+  }
+
+  .transform-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 1100px;
+    margin: 60px auto 0;
+  }
+
+  .transform-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .ba-wrap {
+    display: flex;
+    width: 100%;
+    height: 340px;
+    overflow: hidden;
+  }
+
+  .ba-half {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .ba-half img {
+    width: 200%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.4) brightness(0.8);
+    transition: filter 0.4s;
+  }
+  .ba-half.after img {
+    object-position: 100% center;
+    margin-left: -100%;
+    filter: grayscale(0) brightness(0.9);
+  }
+  .transform-card:hover .ba-half img { filter: grayscale(0) brightness(1); }
+
+  .ba-label {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-cond);
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    backdrop-filter: blur(4px);
+  }
+  .ba-label.before { background: rgba(0,0,0,0.7); color: #888; }
+  .ba-label.after  { background: rgba(201,168,76,0.85); color: #fff; }
+
+  .ba-divider {
+    position: absolute;
+    left: 50%; top: 0;
+    width: 2px; height: 100%;
+    background: var(--red);
+    z-index: 2;
+  }
+
+  .transform-info {
+    background: #161616;
+    padding: 20px 22px;
+  }
+  .transform-name {
+    font-family: var(--font-cond);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .transform-detail {
+    font-family: var(--font-cond);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: var(--red);
+    margin-top: 4px;
+  }
+
+  /* ══════════════════════════════
+     SECTION 5 — PROGRAMS / CTA
+  ══════════════════════════════ */
+  #programs {
+    padding: 120px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .programs-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .program-img {
+    position: relative;
+  }
+  .program-img img {
+    width: 100%;
+    height: 460px;
+    object-fit: cover;
+    filter: brightness(0.8) contrast(1.1) saturate(0.8);
+    display: block;
+  }
+  .program-img::before {
+    content: '';
+    position: absolute;
+    inset: -12px -12px 12px 12px;
+    border: 1px solid var(--red);
+    z-index: -1;
+  }
+
+  .program-list { display: flex; flex-direction: column; gap: 24px; }
+
+  .program-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 28px;
+    border: 1px solid #1e1e1e;
+    transition: border-color 0.3s;
+    cursor: default;
+  }
+  .program-item:hover { border-color: var(--red); }
+
+  .prog-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    background: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .prog-icon svg { width: 20px; height: 20px; }
+
+  .prog-title {
+    font-family: var(--font-cond);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .prog-text { font-size: 0.85rem; color: #777; line-height: 1.6; }
+
+  /* ══════════════════════════════
+     SECTION 6 — TESTIMONIALS
+  ══════════════════════════════ */
+  #testimonials {
+    padding: 120px 60px;
+    background: var(--black2);
+    overflow: hidden;
+  }
+
+  .testi-track {
+    display: flex;
+    gap: 24px;
+    margin-top: 60px;
+    animation: scroll 40s linear infinite;
+    width: max-content;
+  }
+  .testi-track:hover { animation-play-state: paused; }
+
+  @keyframes scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .testi-card {
+    background: #161616;
+    padding: 36px 32px;
+    width: 340px;
+    min-width: 340px;
+    border-left: 3px solid var(--red);
+    flex-shrink: 0;
+  }
+
+  .testi-stars {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+  .star { width: 14px; height: 14px; fill: var(--red); }
+
+  .testi-text {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #aaa;
+    margin-bottom: 20px;
+  }
+
+  .testi-author {
+    font-family: var(--font-cond);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .testi-role {
+    font-family: var(--font-cond);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--red);
+    margin-top: 3px;
+  }
+
+  /* ══════════════════════════════
+     SECTION 7 — CTA BANNER
+  ══════════════════════════════ */
+  #cta {
+    position: relative;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .cta-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1400&q=80');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.25) saturate(0.4);
+  }
+  .cta-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(10,10,10,0.8) 0%, rgba(201,168,76,0.15) 100%);
+  }
+  .cta-inner {
+    position: relative;
+    text-align: center;
+    z-index: 2;
+    padding: 60px;
+  }
+  .cta-inner .section-label { justify-content: center; display: flex; }
+  .cta-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    line-height: 1;
+    margin: 16px 0 32px;
+  }
+  .cta-title span { color: var(--red); }
+  .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  .btn-primary {
+    font-family: var(--font-cond);
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--red-dark); transform: translateY(-2px); }
+
+  .btn-outline {
+    font-family: var(--font-cond);
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    background: transparent;
+    color: var(--white);
+    border: 1px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.3s, color 0.3s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--red); color: var(--red); }
+
+  /* ══════════════════════════════
+     FOOTER
+  ══════════════════════════════ */
+  footer {
+    background: #070707;
+    padding: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    border-top: 1px solid #1a1a1a;
+  }
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+  }
+  .footer-logo span { color: var(--red); }
+  .footer-copy {
+    font-family: var(--font-cond);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: #444;
+  }
+  .footer-social { display: flex; gap: 20px; }
+  .social-link {
+    width: 38px; height: 38px;
+    border: 1px solid #222;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    color: var(--grey);
+    transition: border-color 0.3s, color 0.3s;
+  }
+  .social-link:hover { border-color: var(--red); color: var(--red); }
+  .social-link svg { width: 16px; height: 16px; }
+
+  /* ══════════════════════════════
+     ANIMATIONS
+  ══════════════════════════════ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; }
+    50%       { opacity: 1; }
+  }
+
+  /* Intersection observer reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ══════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════ */
+  @media (max-width: 900px) {
+    nav { padding: 18px 24px; }
+    .nav-links { display: none; }
+    .hero-left { width: 100%; padding: 100px 30px 60px; }
+    .hero-right { width: 100%; opacity: 0.25; }
+    .hero-left::after { display: none; }
+    #about { flex-direction: column; }
+    .about-img-wrap, .about-content { width: 100%; }
+    .about-content { padding: 60px 30px; }
+    .services-grid, .transform-grid { grid-template-columns: 1fr; }
+    .programs-inner { grid-template-columns: 1fr; gap: 40px; }
+    #services, #transformations, #programs, #testimonials { padding: 80px 30px; }
+    footer { padding: 40px 30px; flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">RR<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#transformations">Results</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#cta" class="nav-cta">Get in Touch</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════════════════
+     SECTION 1 — HERO
+     Ratio: 45% black / 55% image
+══════════════════════════════ -->
+<section id="hero">
+  <!-- LEFT — black panel with text -->
+  <div class="hero-left">
+    <p class="hero-eyebrow">Elite Performance Coach</p>
+    <h1 class="hero-name">RONIT<br><span class="red">RAWAT</span></h1>
+    <p class="hero-tagline">Forge Your Body. Master Your Mind.</p>
+    <div class="hero-divider"></div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Years<br>Experience</div>
+      </div>
+      <div>
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Clients<br>Trained</div>
+      </div>
+      <div>
+        <div class="stat-num">98%</div>
+        <div class="stat-label">Success<br>Rate</div>
+      </div>
+    </div>
+    <a href="#cta" class="hero-btn">
+      Start Today
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+
+  <!-- RIGHT — your photo (rr2.png) -->
+  <div class="hero-right">
+    <!-- 
+      PLACE YOUR PHOTO HERE — rr2.png
+      The image should be a full-length or upper-body shot
+      The black gradient on the left will bleed into this image
+      creating the dramatic split effect shown in your reference.
+      Ratio: left black panel = 45%, this image panel = 55%
+      (the hero-left::after adds a 180px gradient overlap for the bleed effect)
+    -->
+    <img
+      src="rr2.png"
+      alt="Ronit Rawat — Elite Gym Trainer"
+      onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg,#1a0a0a 0%,#2a0a0a 100%)'"
+    />
+  </div>
+
+  <!-- Vertical brand text -->
+  <span class="hero-vertical-text">Ronit Rawat — Certified Trainer — 2025</span>
+
+  <!-- Scroll cue -->
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span class="scroll-txt">Scroll</span>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════
+     SECTION 2 — ABOUT / EXPERIENCE
+     Left: rr1.png (your image)
+     Right: Details
+══════════════════════════════ -->
+<section id="about">
+  <!-- LEFT — rr1.png (use GPT to make it dark-toned) -->
+  <div class="about-img-wrap reveal">
+    <!-- 
+      PLACE rr1.png HERE
+      Enhance it with GPT/AI to be darker/moodier before using.
+      The CSS already applies: brightness(0.7) contrast(1.2) saturate(0.7)
+      for a cinematic dark look even without pre-processing.
+    -->
+    <img
+      src="rr1.png"
+      alt="Ronit Rawat Training"
+      onerror="this.src='https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80'"
+    />
+  </div>
+
+  <!-- RIGHT — About content -->
+  <div class="about-content reveal">
+    <p class="section-label">Who I Am</p>
+    <h2 class="section-title">Dedicated to Your <span>Transformation</span></h2>
+    <p class="about-text">
+      With over 10 years of hands-on experience in elite fitness training, I've helped hundreds of individuals break their limits — physically and mentally. My approach is scientific, personalised, and relentless. No templates. No shortcuts. Just real results built on discipline.
+    </p>
+
+    <div class="exp-grid">
+      <div class="exp-card">
+        <div class="exp-num">10+</div>
+        <div class="exp-desc">Years in<br>the Field</div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-num">500+</div>
+        <div class="exp-desc">Clients<br>Coached</div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-num">3</div>
+        <div class="exp-desc">Online<br>Programs</div>
+      </div>
+    </div>
+
+    <div class="skills-list">
+      <span class="skill-tag">Strength Training</span>
+      <span class="skill-tag">Weight Loss</span>
+      <span class="skill-tag">Muscle Building</span>
+      <span class="skill-tag">Nutrition Science</span>
+      <span class="skill-tag">Online Coaching</span>
+      <span class="skill-tag">Injury Recovery</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════
+     SECTION 3 — SERVICES
+══════════════════════════════ -->
+<section id="services">
+  <div class="section-header reveal">
+    <p class="section-label" style="display:flex;justify-content:center">What I Offer</p>
+    <h2 class="section-title">My <span>Services</span></h2>
+  </div>
+
+  <div class="services-grid">
+    <!-- 1v1 Video Call -->
+    <div class="service-card reveal">
+      <span class="service-num">01</span>
+      <div class="service-icon">
+        <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="56" height="56" fill="none"/>
+          <path d="M8 16h28a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V20a4 4 0 0 1 4-4z" stroke="#C9A84C" stroke-width="2"/>
+          <path d="M40 24l12-7v22l-12-7V24z" stroke="#C9A84C" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="22" cy="28" r="5" stroke="#C9A84C" stroke-width="2"/>
+        </svg>
+      </div>
+      <h3 class="service-title">1v1 Video Call Sessions</h3>
+      <p class="service-text">Live, personalised training sessions over video — real-time form correction, motivation, and programming tailored exclusively to your body and goals. Anywhere in the world.</p>
+      <span class="service-arrow">Book a session
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </span>
+    </div>
+
+    <!-- Diet Plan -->
+    <div class="service-card reveal" style="transition-delay:0.1s">
+      <span class="service-num">02</span>
+      <div class="service-icon">
+        <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 14h36v4a18 18 0 0 1-36 0v-4z" stroke="#C9A84C" stroke-width="2"/>
+          <path d="M28 36v8M20 44h16" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+          <path d="M14 14V8M28 14V6M42 14V8" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3 class="service-title">Custom Diet Plans</h3>
+      <p class="service-text">Scientifically designed nutrition plans built around your body type, lifestyle, and targets — whether you're cutting, bulking, or seeking peak athletic performance.</p>
+      <span class="service-arrow">Get your plan
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </span>
+    </div>
+
+    <!-- Online Programs -->
+    <div class="service-card reveal" style="transition-delay:0.2s">
+      <span class="service-num">03</span>
+      <div class="service-icon">
+        <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="10" width="44" height="30" rx="3" stroke="#C9A84C" stroke-width="2"/>
+          <path d="M20 40v6M36 40v6M14 46h28" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+          <path d="M22 25l8-5v10l-8-5z" fill="#C9A84C"/>
+        </svg>
+      </div>
+      <h3 class="service-title">Online Programs</h3>
+      <p class="service-text">Structured, progressive training programs you can follow on your schedule — with video demonstrations, weekly check-ins, and a community of like-minded athletes.</p>
+      <span class="service-arrow">View programs
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════
+     SECTION 4 — BEFORE / AFTER
+══════════════════════════════ -->
+<section id="transformations">
+  <div class="section-header reveal">
+    <p class="section-label" style="display:flex;justify-content:center">Real Clients. Real Results.</p>
+    <h2 class="section-title">Client <span>Transformations</span></h2>
+  </div>
+
+  <div class="transform-grid">
+    <!-- Card 1 -->
+    <div class="transform-card reveal">
+      <div class="ba-wrap">
+        <div class="ba-half before">
+          <img src="https://images.unsplash.com/photo-1598982596832-a9b88d90c2cb?w=600&q=80" alt="Before" />
+          <span class="ba-label before">Before</span>
+        </div>
+        <div class="ba-divider"></div>
+        <div class="ba-half after">
+          <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80" alt="After" />
+          <span class="ba-label after">After</span>
+        </div>
+      </div>
+      <div class="transform-info">
+        <div class="transform-name">Rahul M.</div>
+        <div class="transform-detail">Lost 18 kg — 5 Month Transformation</div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="transform-card reveal" style="transition-delay:0.1s">
+      <div class="ba-wrap">
+        <div class="ba-half before">
+          <img src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=80" alt="Before" />
+          <span class="ba-label before">Before</span>
+        </div>
+        <div class="ba-divider"></div>
+        <div class="ba-half after">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="After" />
+          <span class="ba-label after">After</span>
+        </div>
+      </div>
+      <div class="transform-info">
+        <div class="transform-name">Arjun S.</div>
+        <div class="transform-detail">Built 8 kg Lean Muscle — 6 Months</div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="transform-card reveal" style="transition-delay:0.2s">
+      <div class="ba-wrap">
+        <div class="ba-half before">
+          <img src="https://images.unsplash.com/photo-1585073985636-f1f2e01c974b?w=600&q=80" alt="Before" />
+          <span class="ba-label before">Before</span>
+        </div>
+        <div class="ba-divider"></div>
+        <div class="ba-half after">
+          <img src="https://images.unsplash.com/photo-1534367507873-d2d7e24c797f?w=600&q=80" alt="After" />
+          <span class="ba-label after">After</span>
+        </div>
+      </div>
+      <div class="transform-info">
+        <div class="transform-name">Priya K.</div>
+        <div class="transform-detail">Full Body Recomp — 4 Months</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════
+     SECTION 5 — PROGRAMS
+══════════════════════════════ -->
+<section id="programs">
+  <div class="programs-inner">
+    <div class="program-img reveal">
+      <img
+        src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80"
+        alt="Training session"
+      />
+    </div>
+
+    <div class="program-list">
+      <div class="reveal">
+        <p class="section-label">My Programs</p>
+        <h2 class="section-title" style="margin-bottom:8px">Train With <span>Purpose</span></h2>
+        <p style="color:#777;font-size:0.9rem;line-height:1.7;margin-bottom:32px">Every program is built on progressive overload science, tailored to you.</p>
+      </div>
+
+      <div class="program-item reveal">
+        <div class="prog-icon">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M3 10h14M1 7h2m14 0h2M1 13h2m14 0h2" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="prog-title">Strength Foundations</div>
+          <div class="prog-text">A 12-week beginner-to-intermediate program focused on mastering compound lifts and building a powerful base.</div>
+        </div>
+      </div>
+
+      <div class="program-item reveal" style="transition-delay:0.1s">
+        <div class="prog-icon">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M10 2v16M4 8l6-6 6 6M4 14l6 4 6-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="prog-title">Shred & Define</div>
+          <div class="prog-text">Aggressive fat loss with maintained muscle — combining HIIT, metabolic conditioning, and precision nutrition.</div>
+        </div>
+      </div>
+
+      <div class="program-item reveal" style="transition-delay:0.2s">
+        <div class="prog-icon">
+          <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#fff" stroke-width="1.5"/><path d="M10 6v4l3 3" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="prog-title">Elite Athlete Protocol</div>
+          <div class="prog-text">Advanced 16-week periodisation for experienced lifters aiming for peak strength, size, and conditioning.</div>
+        </div>
+      </div>
+
+      <a href="#cta" class="btn-primary reveal" style="margin-top:8px;transition-delay:0.3s">Explore All Programs</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════
+     SECTION 6 — TESTIMONIALS
+══════════════════════════════ -->
+<section id="testimonials">
+  <div class="section-header reveal">
+    <p class="section-label" style="display:flex;justify-content:center">Voices of Change</p>
+    <h2 class="section-title">What Clients <span>Say</span></h2>
+  </div>
+
+  <!-- Auto-scrolling ticker -->
+  <div style="overflow:hidden;margin-top:0">
+    <div class="testi-track">
+      <!-- Original set -->
+      <div class="testi-card">
+        <div class="testi-stars">
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+        </div>
+        <p class="testi-text">"Ronit completely changed my life. I lost 18 kg in 5 months with his online program and 1v1 sessions. He actually cares about your progress."</p>
+        <div class="testi-author">Rahul Mehta</div>
+        <div class="testi-role">Online Client — Delhi</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+        </div>
+        <p class="testi-text">"His diet plan was the missing piece. No starvation, just smart food choices. I hit my goal weight in 3 months. Highly recommend the video call sessions."</p>
+        <div class="testi-author">Priya Kapoor</div>
+        <div class="testi-role">Diet Plan Client — Mumbai</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+        </div>
+        <p class="testi-text">"10 years of experience shows. His programming is next level — not just generic gym stuff. I put on 8 kg of lean muscle in 6 months following his plan."</p>
+        <div class="testi-author">Arjun Singh</div>
+        <div class="testi-role">Online Program — Bangalore</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+        </div>
+        <p class="testi-text">"I was skeptical about online training but Ronit's 1v1 video sessions are incredibly effective. He corrects my form live and keeps me accountable."</p>
+        <div class="testi-author">Vikram Nair</div>
+        <div class="testi-role">1v1 Sessions — Pune</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+        </div>
+        <p class="testi-text">"The custom diet plan changed everything for me. I never felt deprived. Ronit makes nutrition simple and sustainable. Lost 12 kg and kept it off."</p>
+        <div class="testi-author">Sneha Gupta</div>
+        <div class="testi-role">Diet + Program Client — Hyderabad</div>
+      </div>
+      <!-- Duplicate set for seamless loop -->
+      <div class="testi-card">
+        <div class="testi-stars">
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+        </div>
+        <p class="testi-text">"Ronit completely changed my life. I lost 18 kg in 5 months with his online program and 1v1 sessions. He actually cares about your progress."</p>
+        <div class="testi-author">Rahul Mehta</div>
+        <div class="testi-role">Online Client — Delhi</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+        </div>
+        <p class="testi-text">"His diet plan was the missing piece. No starvation, just smart food choices. I hit my goal weight in 3 months. Highly recommend the video call sessions."</p>
+        <div class="testi-author">Priya Kapoor</div>
+        <div class="testi-role">Diet Plan Client — Mumbai</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+        </div>
+        <p class="testi-text">"10 years of experience shows. His programming is next level — not just generic gym stuff. I put on 8 kg of lean muscle in 6 months following his plan."</p>
+        <div class="testi-author">Arjun Singh</div>
+        <div class="testi-role">Online Program — Bangalore</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+        </div>
+        <p class="testi-text">"I was skeptical about online training but Ronit's 1v1 video sessions are incredibly effective. He corrects my form live and keeps me accountable."</p>
+        <div class="testi-author">Vikram Nair</div>
+        <div class="testi-role">1v1 Sessions — Pune</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+          <svg class="star" viewBox="0 0 14 14"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z" fill="#C9A84C"/></svg>
+        </div>
+        <p class="testi-text">"The custom diet plan changed everything for me. I never felt deprived. Ronit makes nutrition simple and sustainable. Lost 12 kg and kept it off."</p>
+        <div class="testi-author">Sneha Gupta</div>
+        <div class="testi-role">Diet + Program Client — Hyderabad</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════
+     SECTION 7 — CTA
+══════════════════════════════ -->
+<section id="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-overlay"></div>
+  <div class="cta-inner">
+    <p class="section-label">Limited Spots Available</p>
+    <h2 class="cta-title">Ready to <span>Transform</span>?</h2>
+    <p style="color:#aaa;margin-bottom:32px;font-size:1rem;font-family:var(--font-body)">Stop waiting. Start building the body you deserve today.</p>
+    <div class="cta-btns">
+      <a href="mailto:ronit@ronitrawat.com" class="btn-primary">Book a Free Consultation</a>
+      <a href="#services" class="btn-outline">View All Services</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">RONIT<span> RAWAT</span></div>
+  <p class="footer-copy">© 2025 Ronit Rawat. All rights reserved.</p>
+  <div class="footer-social">
+    <!-- Instagram -->
+    <a href="#" class="social-link" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+    </a>
+    <!-- YouTube -->
+    <a href="#" class="social-link" aria-label="YouTube">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 8s-.25-1.75-1-2.5c-.97-1-2.05-1-2.55-1.07C15.9 4.2 12 4.2 12 4.2s-3.9 0-6.45.23C5.05 4.5 3.97 4.5 3 5.5 2.25 6.25 2 8 2 8S1.75 10 1.75 12v1.9C1.75 16 2 17.75 2 17.75s.25 1.75 1 2.5c.97 1 2.25.97 2.8 1.07C7.8 21.57 12 21.6 12 21.6s3.9 0 6.45-.25c.5-.07 1.58-.07 2.55-1.07.75-.75 1-2.5 1-2.5S22.25 16 22.25 13.9V12C22.25 10 22 8 22 8z"/><polygon points="10,15 15,12 10,9 10,15" fill="currentColor" stroke="none"/></svg>
+    </a>
+    <!-- WhatsApp -->
+    <a href="#" class="social-link" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    </a>
+  </div>
+</footer>
+
+
+<script>
+  // Intersection Observer for scroll reveals
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav background on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 60
+      ? 'rgba(10,10,10,0.97)'
+      : 'linear-gradient(to bottom, rgba(10,10,10,0.95), transparent)';
+  });
+</script>
+</body>
+</html>
